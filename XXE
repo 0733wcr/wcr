@@ -1,0 +1,33 @@
+import requests
+import json
+requests.packages.urllib3.disable_warnings()
+url = "https://www.baidu.com/s?wcr=123"
+data = {
+    "wcr": "123"
+}
+cookies = {
+    "BAIDU_CARRIER": "001",
+    "BAIDU_NETTYPE": "2",
+    "BD_MAC": "56:78:90:AB:CD:EF",
+    "bdnetat": "2",
+    "__utma": "123456789.123456789.1.1.123456789.1",
+    "__utmc": "123456789",
+    "__utmz": "123456789.123456789.1.1.utmccn=(direct)|utmcsr=www.example.com|utmcct=/page.html|utmcmd=click"
+}
+requests.get('https://www.baidu.com/s?wcr=123', verify=False)
+
+response = requests.post(url, data=data, cookies=cookies)
+print(response.text)
+def send_post_request(url, data, cookies, vuln_test):
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Cookie': cookies
+    }
+    if vuln_test:
+        headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    response = requests.post(url, data=data, headers=headers)
+    if vuln_test:
+        print("Vulnerable to XXE attack!")
+    return response
+if __name__ == "__main__":
+    print("完成")
