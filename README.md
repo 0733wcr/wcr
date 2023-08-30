@@ -1,1 +1,1 @@
-# wcr
+使用requests.post方法发送POST请求，并将请求头和数据传递给该方法
